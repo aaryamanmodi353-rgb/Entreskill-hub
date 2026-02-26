@@ -16,8 +16,8 @@ const Login = () => {
     setError('');
     
     try {
-      // Hit the login endpoint
-      const response = await axios.post('http://localhost:5000/api/users/login', formData);
+      // --- UPDATE: Use Render URL instead of Localhost ---
+      const response = await axios.post('https://entreskill-hub.onrender.com/api/users/login', formData);
       
       // Save token to local storage
       localStorage.setItem('userInfo', JSON.stringify(response.data));

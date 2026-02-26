@@ -9,8 +9,13 @@ const AdminRoadmapCurator = () => {
   // Load existing ideas to link roadmaps to
   useEffect(() => {
     const fetchIdeas = async () => {
-      const { data } = await axios.get('http://localhost:5000/api/ideas');
-      setIdeas(data);
+      try {
+        // --- UPDATE: Use Render URL ---
+        const { data } = await axios.get('https://entreskill-hub.onrender.com/api/ideas');
+        setIdeas(data);
+      } catch (err) {
+        console.error("Failed to fetch ideas:", err);
+      }
     };
     fetchIdeas();
   }, []);
@@ -26,12 +31,16 @@ const AdminRoadmapCurator = () => {
   const submitRoadmap = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/roadmaps', {
+      // --- UPDATE: Use Render URL ---
+      await axios.post('https://entreskill-hub.onrender.com/api/roadmaps', {
         ideaId: selectedIdea,
         steps: steps
       });
       alert("Structured Roadmap Deployed to Command Center!");
-    } catch (err) { console.error(err); }
+    } catch (err) { 
+        console.error(err); 
+        alert("Failed to deploy roadmap.");
+    }
   };
 
   return (

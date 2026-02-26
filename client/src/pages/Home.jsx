@@ -6,7 +6,7 @@ const Home = () => {
     // 1. Initialize with DEFAULT DATA (The 12 Ideas)
     const defaultIdeas = [
         {
-          _id: "1", // Strings are safer for IDs
+          _id: "1",
           title: "AI Automation Agency",
           category: "Developer",
           difficulty: "Advanced",
@@ -101,7 +101,7 @@ const Home = () => {
           category: "Librarian",
           difficulty: "Beginner",
           description: "Start a niche bookstore with a reading area and lending library service.",
-          requiredSkills: ["Librarian", "Management"],
+          requiredSkills: ["Librarian", "Management", "Community"],
           estimatedCost: "₹50,000 - ₹200,000"
         },
         {
@@ -115,8 +115,8 @@ const Home = () => {
         }
     ];
 
-    const [ideas, setIdeas] = useState(defaultIdeas); // Start with default data
-    const [loading, setLoading] = useState(false);    // No loading needed for static data
+    const [ideas, setIdeas] = useState(defaultIdeas);
+    const [loading, setLoading] = useState(false);
     const [user, setUser] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -124,15 +124,15 @@ const Home = () => {
         const userInfo = JSON.parse(localStorage.getItem('userInfo'));
         if (userInfo) setUser(userInfo);
 
-        // Optional: Try to fetch from backend, if fails, keep defaults
         const fetchIdeas = async () => {
             try {
-                // Uncomment this if you populate your DB later
-                // const response = await axios.get('http://localhost:5000/api/ideas');
-                // const data = Array.isArray(response.data) ? response.data : response.data.data || [];
-                // if (data.length > 0) setIdeas(data); 
+                // --- UPDATE: Use Render URL instead of Localhost ---
+                const response = await axios.get('https://entreskill-hub.onrender.com/api/ideas');
+                
+                const data = Array.isArray(response.data) ? response.data : response.data.data || [];
+                if (data.length > 0) setIdeas(data); 
             } catch (error) {
-                console.log('Using default ideas (Backend offline or empty)');
+                console.log('Using default ideas (Backend might be asleep, that is okay)');
             }
         };
         fetchIdeas();
@@ -171,7 +171,7 @@ const Home = () => {
                     <div className="bg-white/[0.03] backdrop-blur-2xl border border-white/10 p-6 rounded-3xl shadow-2xl group relative overflow-hidden">
                         <div className="absolute -top-10 -right-10 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl"></div>
                         
-                        {/* --- MODIFIED: Founder Status Header with Dynamic Badge --- */}
+                        {/* Founder Status */}
                         <div className="flex justify-between items-center mb-4 relative z-10">
                             <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Founder Status</h4>
                             {user?.title === 'Expert Mentor' && (

@@ -117,7 +117,8 @@ const SessionRoom = () => {
             `;
         }
 
-        const { data } = await axios.post('http://localhost:5000/api/chat', { 
+        // --- UPDATE: Use Render URL instead of Localhost ---
+        const { data } = await axios.post('https://entreskill-hub.onrender.com/api/chat', { 
             message: promptContext 
         });
 

@@ -8,7 +8,8 @@ const Mentors = () => {
   useEffect(() => {
     const fetchMentors = async () => {
       try {
-        const { data } = await axios.get('http://localhost:5000/api/mentors');
+        // --- UPDATE: Use Render URL instead of Localhost ---
+        const { data } = await axios.get('https://entreskill-hub.onrender.com/api/mentors');
         setMentors(data);
         setLoading(false);
       } catch (err) {

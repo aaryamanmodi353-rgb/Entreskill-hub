@@ -17,7 +17,7 @@ const Register = () => {
     
     try {
       // Send data to the backend API we built
-      const response = await axios.post('http://localhost:5000/api/users', formData);
+      const response = await axios.post('https://entreskill-hub.onrender.com/api/users', formData);
       
       // Save the user data and token to local storage
       localStorage.setItem('userInfo', JSON.stringify(response.data));

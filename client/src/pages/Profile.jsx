@@ -71,8 +71,9 @@ const Profile = () => {
 
       const updatedSkills = skills.split(',').map(s => s.trim()).filter(s => s !== "");
       
+      // --- UPDATE: Use Render URL instead of Localhost ---
       const { data } = await axios.put(
-        'http://localhost:5000/api/users/profile',
+        'https://entreskill-hub.onrender.com/api/users/profile',
         { name, skills: updatedSkills },
         config
       );

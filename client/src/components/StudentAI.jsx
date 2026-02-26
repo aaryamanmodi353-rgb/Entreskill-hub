@@ -26,7 +26,9 @@ const StudentAI = () => {
     setIsTyping(true);
 
     try {
-      const { data } = await axios.post('http://localhost:5000/api/chat', { message: input });
+      // --- UPDATE: Use Render URL ---
+      const { data } = await axios.post('https://entreskill-hub.onrender.com/api/chat', { message: input });
+      
       const botMessage = { sender: 'bot', text: data.reply };
       setMessages(prev => [...prev, botMessage]);
     } catch (error) {
