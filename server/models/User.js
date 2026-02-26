@@ -7,7 +7,7 @@ const userSchema = mongoose.Schema(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     
-    // --- NEW FIELDS (These were missing!) ---
+    // --- FOUNDER / MENTOR FIELDS ---
     isAdmin: { 
       type: Boolean, 
       required: true, 
@@ -15,7 +15,7 @@ const userSchema = mongoose.Schema(
     },
     title: { 
       type: String, 
-      default: 'Founder' // This allows us to change it to 'Expert Mentor' later
+      default: 'Founder' 
     },
     xp: { 
       type: Number, 
@@ -25,13 +25,25 @@ const userSchema = mongoose.Schema(
       type: Number, 
       default: 1 
     },
-    // ----------------------------------------
+    // -------------------------------
 
     role: { type: String, default: 'User' },
     skills: { type: [String], default: [] }, 
   },
   { timestamps: true }
 );
+
+// --- 🔥 THIS WAS MISSING! ADD THIS BLOCK ---
+// This runs BEFORE saving to the database. 
+// It checks if the password changed, then encrypts it.
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) {
+    next();
+  }
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+});
+// -------------------------------------------
 
 userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
