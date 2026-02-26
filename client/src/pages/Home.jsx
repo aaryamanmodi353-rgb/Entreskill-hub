@@ -126,13 +126,22 @@ const Home = () => {
 
         const fetchIdeas = async () => {
             try {
-                // --- UPDATE: Use Render URL instead of Localhost ---
+                // Fetch from your Live Render Backend
                 const response = await axios.get('https://entreskill-hub.onrender.com/api/ideas');
                 
                 const data = Array.isArray(response.data) ? response.data : response.data.data || [];
-                if (data.length > 0) setIdeas(data); 
+                
+                // --- THE FIX IS HERE ---
+                // Only use DB data if you have MORE than 5 ideas. 
+                // Otherwise, keep the 12 default ones for a better look.
+                if (data.length > 5) {
+                    setIdeas(data); 
+                } else {
+                    console.log("Database has too few items. Keeping default 12 ideas for display.");
+                }
+                
             } catch (error) {
-                console.log('Using default ideas (Backend might be asleep, that is okay)');
+                console.log('Using default ideas (Backend offline or error)');
             }
         };
         fetchIdeas();
